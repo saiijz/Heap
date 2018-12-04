@@ -61,9 +61,8 @@ int addValue(int* &arr, int value) {
 	return 1;
 }
 
-int balanceTree(int *&arr) {
-	int index{ 1 };
-	while (arr[index * 2] != MARK_NUMBER) {
+int topDownHeapify(int *&arr, int index) {
+	while (arr[index * 2] > MARK_NUMBER) {
 		int highPriorityValue = 0;
 
 		if (arr[index] > arr[index * 2] && arr[index * 2] < arr[index * 2 + 1]) {
@@ -104,9 +103,28 @@ int deleteRoot(int *&arr) {
 	arr[1] = arr[replaceValueIndex];
 	arr[replaceValueIndex] = MARK_NUMBER;
 	
-	balanceTree(arr);
+	topDownHeapify(arr, 1);
 	return 1;
 	
+}
+
+int changeNodeValue(int*& arr, int pos, int value) {
+	if (checkSize(arr) < pos) {
+		return -1;
+	}
+
+	int comp{ arr[pos] - value };
+
+	arr[pos] = value;
+	if (comp == 0) {
+		return -1;
+	}
+	
+	if (comp < 0) {
+		topDownHeapify(arr,pos);
+		return 1;
+	}
+
 }
 
 void printHeap(int* arr) {
@@ -130,6 +148,8 @@ int main() {
 	addValue(arr, 84);
 	printHeap(arr);
 	deleteRoot(arr);
+	printHeap(arr);
+	changeNodeValue(arr, 2, 86);
 	printHeap(arr);
 	system("pause");
 }
