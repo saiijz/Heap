@@ -151,6 +151,13 @@ int changeNodeValue(int*& arr, int pos, int value) {
 
 }
 
+int buildTreeFromArrayNumber(int* arr, int unit) {
+	for (int i{ unit }; i > 0; i--) {
+		bottomUpHeapify(arr, i);
+	}
+	return 1;
+}
+
 void printHeap(int* arr) {
 	for (int i{ 1 }; i < checkSize(arr) + 1; i++) {
 		std::cout << arr[i] << " ";
@@ -159,7 +166,7 @@ void printHeap(int* arr) {
 }
 
 int main() {
-	
+	/*
 	int* arr{ createHeap(5) };
 	addValue(arr, 12);
 	addValue(arr, 57);
@@ -189,5 +196,22 @@ int main() {
 	printHeap(arr);
 	changeNodeValue(arr, 12, 8);
 	printHeap(arr);
+	*/
+
+	int* arr = new int[11];
+	arr[0] = IGNORE_NUMBER;
+	arr[1] = 42;
+	arr[2] = 78;
+	arr[3] = 64;
+	arr[4] = 73;
+	arr[5] = 83;
+	arr[6] = 4;
+	arr[7] = 50;
+	arr[8] = 74;
+	buildTreeFromArrayNumber(arr, 8);
+	for (int i{ 1 }; i < 9; i++) {
+		std::cout << arr[i] << " ";
+	}
+	std::cout << std::endl;
 	system("pause");
 }
