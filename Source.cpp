@@ -65,11 +65,15 @@ int topDownHeapify(int *&arr, int index) {
 	while (arr[index * 2] > MARK_NUMBER) {
 		int highPriorityValue = 0;
 
-		if (arr[index] > arr[index * 2] && arr[index * 2] < arr[index * 2 + 1]) {
-			highPriorityValue = 1;
+		if (arr[index] > arr[index * 2]) {
+			if (arr[index * 2 + 1] < arr[index * 2] && arr[index * 2 + 1] != MARK_NUMBER) {
+				highPriorityValue = 2;
+			}
+			else {
+				highPriorityValue = 1;
+			}
 		}
-
-		if (arr[index] > arr[index * 2 + 1] && arr[index * 2] > arr[index * 2 + 1]) {
+		else if (arr[index * 2 + 1] != MARK_NUMBER && arr[index] > arr[index * 2 + 1]) {
 			highPriorityValue = 2;
 		}
 
@@ -89,8 +93,24 @@ int topDownHeapify(int *&arr, int index) {
 				}
 			}
 		}
+		else {
+			break;
+		}
 
 	}
+	return 1;
+}
+
+int bottomUpHeapify(int* arr, int index) {
+	int newPosition = index;
+
+	for (int i{ newPosition }; i > 0; i /= 2) {
+		if (arr[i] > arr[newPosition]) {
+			swapPositiveValue(arr[i], arr[newPosition]);
+			newPosition /= 2;
+		}
+	}
+
 	return 1;
 }
 
@@ -124,6 +144,10 @@ int changeNodeValue(int*& arr, int pos, int value) {
 		topDownHeapify(arr,pos);
 		return 1;
 	}
+	if (comp > 0) {
+		bottomUpHeapify(arr, pos);
+		return 1;
+	}
 
 }
 
@@ -149,7 +173,21 @@ int main() {
 	printHeap(arr);
 	deleteRoot(arr);
 	printHeap(arr);
-	changeNodeValue(arr, 2, 86);
+	changeNodeValue(arr, 4, 11);
+	printHeap(arr);
+	deleteRoot(arr);
+	printHeap(arr);
+	changeNodeValue(arr, 1, 70);
+	printHeap(arr);
+	addValue(arr, 60);
+	addValue(arr, 39);
+	addValue(arr, 48);
+	addValue(arr, 96);
+	addValue(arr, 25);
+	printHeap(arr);
+	deleteRoot(arr);
+	printHeap(arr);
+	changeNodeValue(arr, 12, 8);
 	printHeap(arr);
 	system("pause");
 }
