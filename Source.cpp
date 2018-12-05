@@ -125,7 +125,22 @@ int deleteRoot(int *&arr) {
 	
 	topDownHeapify(arr, 1);
 	return 1;
-	
+}
+
+int pop(int *&arr) {
+	if (checkSize(arr) < 1) {
+		return -1;
+	}
+
+	int popValue = arr[1];
+
+	int replaceValueIndex{ checkSize(arr) };
+	arr[1] = arr[replaceValueIndex];
+	arr[replaceValueIndex] = MARK_NUMBER;
+
+	topDownHeapify(arr, 1);
+	return popValue;
+
 }
 
 int changeNodeValue(int*& arr, int pos, int value) {
@@ -158,6 +173,15 @@ int buildTreeFromArrayNumber(int* arr, int unit) {
 	return 1;
 }
 
+int* heapSort(int *&arr) {
+	int* result{ new int[checkSize(arr)] };
+	int size{ checkSize(arr) };
+	for (int i{ 0 }; i < size + 1; i++) {
+		result[i] = pop(arr);
+	}
+	return result;
+}
+
 void printHeap(int* arr) {
 	for (int i{ 1 }; i < checkSize(arr) + 1; i++) {
 		std::cout << arr[i] << " ";
@@ -166,7 +190,6 @@ void printHeap(int* arr) {
 }
 
 int main() {
-	/*
 	int* arr{ createHeap(5) };
 	addValue(arr, 12);
 	addValue(arr, 57);
@@ -190,28 +213,23 @@ int main() {
 	addValue(arr, 39);
 	addValue(arr, 48);
 	addValue(arr, 96);
-	addValue(arr, 25);
+	addValue(arr, 55);
+	addValue(arr, 77);
+	addValue(arr, 21);
+	addValue(arr, 19);
 	printHeap(arr);
 	deleteRoot(arr);
 	printHeap(arr);
+	std::cout << std::endl;
 	changeNodeValue(arr, 12, 8);
 	printHeap(arr);
-	*/
-
-	int* arr = new int[11];
-	arr[0] = IGNORE_NUMBER;
-	arr[1] = 42;
-	arr[2] = 78;
-	arr[3] = 64;
-	arr[4] = 73;
-	arr[5] = 83;
-	arr[6] = 4;
-	arr[7] = 50;
-	arr[8] = 74;
-	buildTreeFromArrayNumber(arr, 8);
-	for (int i{ 1 }; i < 9; i++) {
-		std::cout << arr[i] << " ";
+	
+	int *sortedArray{ heapSort(arr) };
+	for (int i{ 0 }; i < 15; i++) {
+		std::cout << sortedArray[i] << " " ;
 	}
+
+	
 	std::cout << std::endl;
 	system("pause");
 }
